@@ -27,4 +27,5 @@ struct Settings
 	static inline bSetting closeOnEmpty{ "General"s, "closeOnEmpty"s, true };
 	static inline bSetting dispelInvis{ "General"s, "dispelInvis"s, true };
 	static inline bSetting disableAnimals{ "General"s, "disableAnimals"s, false };
+	static inline bSetting disableCorpses{ "General"s, "disableCorpses"s, false };
 };

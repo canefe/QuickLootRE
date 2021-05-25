@@ -95,7 +95,7 @@ namespace Events
 			if (auto actor = a_ref->As<RE::Actor>(); actor) {
 				auto dobj = RE::BGSDefaultObjectManager::GetSingleton();
 				auto keyword = dobj->GetObject<RE::BGSKeyword>(RE::DEFAULT_OBJECT::kKeywordAnimal);
-				if (!actor->IsDead() ||
+				if (*Settings::disableCorpses || !actor->IsDead() ||
 					actor->IsSummoned() || (actor->GetRace()->HasKeyword(keyword) && *Settings::disableAnimals)) {
 					return false;
 				}
