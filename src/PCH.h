@@ -30,9 +30,9 @@
 #include <vector>
 
 #pragma warning(push)
-#include <boost/regex.hpp>
 #include <frozen/map.h>
 #include <spdlog/sinks/basic_file_sink.h>
+#include <srell.hpp>
 
 #ifdef NDEBUG
 #	include <spdlog/sinks/basic_file_sink.h>
@@ -57,6 +57,6 @@ namespace stl
 
 #define DLLEXPORT __declspec(dllexport)
 
-#include "Version.h"
+#include "Plugin.h"
 
 #include "Settings.h"

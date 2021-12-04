@@ -5,7 +5,7 @@
 #include "CLIK/GFx/Controls/ScrollingList.h"
 #include "CLIK/TextField.h"
 #include "ContainerChangedHandler.h"
-#include "Items/GroundItems.h"
+#include "Items/GroundItem.h"
 #include "Items/InventoryItem.h"
 #include "Items/Item.h"
 #include "OpenCloseHandler.h"
@@ -372,14 +372,14 @@ namespace Scaleform
 
 			_buttonBarProvider.ClearElements();
 			auto gmst = RE::GameSettingCollection::GetSingleton();
-			const boost::regex pattern("<.*>(.*)<.*>"s, boost::regex_constants::ECMAScript);
+			const srell::regex pattern("<.*>(.*)<.*>"s, srell::regex_constants::ECMAScript);
 			for (std::size_t i = 0; i < mappings.size(); ++i) {
 				const auto& mapping = mappings[i];
 
 				auto setting = gmst->GetSetting(std::get<0>(mapping).data());
 				std::string label = setting ? setting->GetString() : "<undefined>"s;
-				boost::smatch matches;
-				if (boost::regex_match(label, matches, pattern)) {
+				srell::smatch matches;
+				if (srell::regex_match(label, matches, pattern)) {
 					if (matches.size() >= 2) {
 						assert(matches.size() == 2);
 						label = matches[1].str();
