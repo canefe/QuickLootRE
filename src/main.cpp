@@ -124,6 +124,18 @@ namespace
 	}
 }
 
+extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []() {
+	SKSE::PluginVersionData v;
+
+	v.PluginVersion(Plugin::VERSION);
+	v.PluginName(Plugin::NAME);
+
+	v.UsesAddressLibrary(true);
+	v.CompatibleVersions({ SKSE::RUNTIME_LATEST });
+
+	return v;
+}();
+
 extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_skse)
 {
 	InitializeLog();

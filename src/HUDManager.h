@@ -11,9 +11,9 @@ public:
 
 	static void Install()
 	{
-		Handler<241857>::Install();  // TESNPC
-		Handler<234000>::Install();  // TESObjectACTI
-		Handler<234148>::Install();  // TESObjectCONT
+		Handler<195816>::Install();  // TESNPC
+		Handler<189485>::Install();  // TESObjectACTI
+		Handler<189633>::Install();  // TESObjectCONT
 		logger::info("Installed {}"sv, typeid(HUDManager).name());
 	}
 

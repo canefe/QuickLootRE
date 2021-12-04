@@ -91,7 +91,7 @@ namespace Events
 		constexpr std::size_t size = end - begin;
 		static_assert(size >= 6);
 
-		REL::Relocation<std::uintptr_t> target{ REL::ID(36604), begin };
+		REL::Relocation<std::uintptr_t> target{ REL::ID(37612), begin };  // Actor::SetLifeState
 		REL::safe_fill(target.address(), REL::INT3, size);
 
 		auto& trampoline = SKSE::GetTrampoline();
