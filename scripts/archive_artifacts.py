@@ -1,42 +1,48 @@
-import argparse
-import os
-import zipfile
+import argparse, os, zipfile
 
-def make_rel_archive(a_args):
-	archive = zipfile.ZipFile(a_args.name + ".zip", "w", zipfile.ZIP_DEFLATED)
-	archive.write(
-		a_args.dll,
-		"SKSE/Plugins/{}".format(os.path.basename(a_args.dll)))
-	archive.write(
-		os.path.join(a_args.src_dir, "QuickLootRE.toml"),
-		"SKSE/Plugins/QuickLootRE.toml")
-	archive.write(
-		os.path.join(a_args.src_dir, "swf", "artifacts", "LootMenu.swf"),
-		"Interface/LootMenu.swf")
+def make_zipfile(a_name):
+	return zipfile.ZipFile("{}.zip".format(a_name), "w", zipfile.ZIP_DEFLATED)
 
-def make_dbg_archive(a_args):
-	archive = zipfile.ZipFile(a_args.name + "_pdb" + ".zip", "w", zipfile.ZIP_DEFLATED)
-	archive.write(a_args.pdb, os.path.basename(a_args.pdb))
+def make_rel_archive(a_name, a_args):
+	zip = make_zipfile(a_name)
+	def write(a_file, a_directory):
+		zip.write(
+			a_file,
+			"{}/{}".format(
+				a_directory,
+				os.path.basename(a_file)))
+
+	for file in a_args.plugin_files:
+		write(file, "SKSE/Plugins")
+
+	for file in a_args.swf_files:
+		write(file, "Interface")
+
+def make_dbg_archive(a_name, a_args):
+	zip = make_zipfile("{}_pdbs".format(a_name))
+	for pdb in a_args.pdbs:
+		zip.write(pdb, os.path.basename(pdb))
 
 def parse_arguments():
 	parser = argparse.ArgumentParser(description="archive build artifacts for distribution")
-	parser.add_argument("--dll", type=str, help="the full dll path", required=True)
-	parser.add_argument("--name", type=str, help="the project name", required=True)
-	parser.add_argument("--pdb", type=str, help="the full pdb path", required=True)
-	parser.add_argument("--src-dir", type=str, help="the project root source directory", required=True)
+	parser.add_argument("--bin-dir", type=str, help="the project binary directory", required=True)
+	parser.add_argument("--plugin-files", type=str, help="the plugins files to archive", nargs="+", required=True)
+	parser.add_argument("--pdbs", type=str, help="the pdbs to archive", nargs="+", required=True)
+	parser.add_argument("--project", type=str, help="the project's name", required=True)
+	parser.add_argument("--swf-files", type=str, help="the swf files to archive", nargs="+", required=True)
 	return parser.parse_args()
 
 def main():
-	out = "artifacts"
-	try:
-		os.mkdir(out)
-	except FileExistsError:
-		pass
-	os.chdir(out)
+	print("Archiving artifacts...")
 
 	args = parse_arguments()
-	make_rel_archive(args)
-	make_dbg_archive(args)
+
+	out = os.path.join(args.bin_dir, "artifacts")
+	os.makedirs(out, exist_ok=True)
+	os.chdir(out)
+
+	make_rel_archive(args.project, args)
+	make_dbg_archive(args.project, args)
 
 if __name__ == "__main__":
 	main()

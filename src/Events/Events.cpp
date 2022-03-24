@@ -71,14 +71,12 @@ namespace Events
 		{
 			explicit Patch(std::uintptr_t a_target)
 			{
-				mov(rcx, rsi);  // rsi == Actor* this
+				mov(rcx, rdi);  // rdi == Actor* this
 
 				pop(r15);
 				pop(r14);
-				pop(r12);
 				pop(rdi);
 				pop(rsi);
-				pop(rbx);
 				pop(rbp);
 
 				mov(rax, a_target);
@@ -86,12 +84,12 @@ namespace Events
 			}
 		};
 
-		constexpr std::size_t begin = 0x503;
-		constexpr std::size_t end = 0x50D;
+		constexpr std::size_t begin = 0x494;
+		constexpr std::size_t end = 0x49B;
 		constexpr std::size_t size = end - begin;
 		static_assert(size >= 6);
 
-		REL::Relocation<std::uintptr_t> target{ REL::ID(36604), begin };
+		REL::Relocation<std::uintptr_t> target{ REL::ID(37612), begin };  // Actor::SetLifeState
 		REL::safe_fill(target.address(), REL::INT3, size);
 
 		auto& trampoline = SKSE::GetTrampoline();

@@ -1,3 +1,2 @@
-/.vscode
-/build*
-/swf/artifacts
+build/
+swf/artifacts/

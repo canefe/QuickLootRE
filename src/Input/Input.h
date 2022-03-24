@@ -45,10 +45,10 @@ namespace Input
 		static void Install()
 		{
 			constexpr std::array locations{
-				std::make_pair<std::uint64_t, std::size_t>(52374, 0x17),
-				std::make_pair<std::uint64_t, std::size_t>(52400, 0x17),
-				std::make_pair<std::uint64_t, std::size_t>(67234, 0x113),
-				std::make_pair<std::uint64_t, std::size_t>(67240, 0x17B),
+				std::make_pair<std::uint64_t, std::size_t>(53270, 0x17),
+				std::make_pair<std::uint64_t, std::size_t>(53299, 0x17),
+				std::make_pair<std::uint64_t, std::size_t>(68534, 0x165),
+				std::make_pair<std::uint64_t, std::size_t>(68540, 0x266),
 			};
 
 			auto& trampoline = SKSE::GetTrampoline();
